@@ -7,11 +7,13 @@
 module StmBench (stmBench) where
 
 import Control.Concurrent.STM
+    ( atomically, newTBQueueIO, readTBQueue, writeTBQueue, TBQueue )
 import Control.Concurrent.STM.TRingBuffer.TBQueue qualified as RB
-import Control.Concurrent.Async
-import Control.Monad
+import Control.Concurrent.Async ( async, wait )
+import Control.Monad ( replicateM, replicateM_ )
 import Test.Tasty (localOption)
 import Test.Tasty.Bench
+    ( bench, bgroup, defaultMain, whnfAppIO, TimeMode(WallTime) )
 import Data.Foldable (traverse_)
 
 

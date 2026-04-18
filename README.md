@@ -39,5 +39,3 @@ All
       108  ms ± 6.8 ms [1.06x faster]
 ```
 Above, [] are annotations added by me, calculated from reported figures and rounded to 2 decimal places.
-
-

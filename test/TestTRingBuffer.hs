@@ -1,16 +1,31 @@
 -- Unit tests for TRingBuffer.
-
 {-# OPTIONS_GHC -Wno-type-defaults -Wno-unused-do-bind #-}
 
 module TestTRingBuffer (testTRingBuffer) where
 
-import Control.Concurrent.Async
-import Control.Concurrent.STM
+import Control.Concurrent.Async ( async )
+import Control.Concurrent.STM ( atomically, orElse )
 import Control.Concurrent.STM.TRingBuffer as TRB
+    ( TRingBuffer(..),
+      new,
+      isEmpty,
+      length,
+      isFull,
+      newIO,
+      pushBack,
+      popFront,
+      pushFront,
+      peekFront,
+      flushFront,
+      popBack,
+      peekBack,
+      flushBack )
 import Control.Monad
+    ( Monad((>>), (>>=)), replicateM, replicateM_, forM_ )
+import Data.Functor ( (<&>) )
 import Test.Hspec
+    ( SpecWith, describe, it, shouldReturn, shouldBe )
 import Prelude hiding (length)
-import Data.Functor
 
 testTRingBuffer :: SpecWith ()
 testTRingBuffer = describe "Unit tests for TRingBuffer" $ do
