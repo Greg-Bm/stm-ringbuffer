@@ -1,0 +1,72 @@
+cabal-version:      3.4
+name:               stm-ringbuffer
+version:            0.1.0.0
+license:            BSD-3-Clause
+author:             Greg Baimetov
+maintainer:         Greg Baimetov
+description:
+  This package provides a ring buffer in STM and a wrapper which mimics the interface to TBQueue.
+
+copyright:          (c) Greg Baimetov
+
+build-type:         Simple
+
+extra-doc-files:    CHANGELOG.md
+                  , README.md
+common warnings
+    ghc-options: -Wall
+
+library
+  hs-source-dirs:  src
+
+  default-extensions: ImportQualifiedPost
+  exposed-modules:    Control.Concurrent.STM.TRingBuffer
+                    , Control.Concurrent.STM.TRingBuffer.TBQueue
+  build-depends:      array
+                    , base
+                    , dlist
+                    , stm >= 2.5.3
+  ghc-options:        -Wall
+
+test-suite test
+    type: exitcode-stdio-1.0
+    default-extensions: ImportQualifiedPost
+
+    hs-source-dirs:      test
+    main-is:             Main.hs
+    other-modules:       TestTRingBuffer
+                       , ReferenceTest
+    build-depends:       QuickCheck >= 2.15.0.1
+                       , array
+                       , async >= 2.2.6
+                       , base
+                       , containers >= 0.6.7
+                       , criterion >= 1.6.5.0
+                       , deepseq >= 1.4.8.1
+                       , hspec >= 2.11.17
+                       , random >= 1.3.1
+                       , stm >= 2.5.3
+                       , stm-ringbuffer
+                       , QuickCheck
+                       , generic-random >= 1.5
+
+benchmark benchmark
+    type: exitcode-stdio-1.0
+    default-extensions: ImportQualifiedPost
+    hs-source-dirs:      benchmark
+
+    main-is:             Main.hs
+
+    other-modules:       StmBench
+
+    build-depends:       QuickCheck >= 2.15.0.1
+                       , array
+                       , async >= 2.2.6
+                       , base
+                       , containers
+                       , criterion >= 1.6.4.0
+                       , deepseq >= 1.4.8.1
+                       , stm >= 2.5.3
+                       , stm-ringbuffer
+                       , tasty >= 1.5.4
+                       , tasty-bench >= 0.5
