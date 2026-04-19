@@ -5,7 +5,6 @@
 -- that matches that of 'Control.Concurrent.STM.TBQueue' . As such, it can
 -- be used as a drop-in replacement, for example with mixins.
 
-
 module Control.Concurrent.STM.TRingBuffer.TBQueue
   ( TBQueue,
     newTBQueue,
