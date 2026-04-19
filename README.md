@@ -3,7 +3,7 @@
 ## About
 This is an implementation of a ring buffer for STM. A wrapper exposing a TBQueue-like interface is provided, offering improved performance compared to the current implementation of TBQueue in the STM package.
 
-This work is similar to https://github.com/haskell/stm/pull/70 .
+This work is similar to https://github.com/haskell/stm/pull/70 . However, this implementation is hopefully correct and supports ringbuffers with size == 0.
 
 ## Usage
 Mixins can be used to quickly replace the standard TBQueue implementation with the one in this library. Add the following fields to your cabal file:
