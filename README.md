@@ -18,24 +18,22 @@ library foo
 ```
 
 ## Benchmark results
-In benchmarks, TRingBuffer.TBQueue demonstrates improved performance compared to TBQueue, especially when there are multiple producers and consumers. For example:
-
+In benchmarks, TRingBuffer.TBQueue demonstrates improved performance compared to STM's TBQueue:
 ```
 All
   concurrent spsc
     TBQueue:    OK
       119  ms ± 6.8 ms
     RB.TBQueue: OK
-      109  ms ± 7.3 ms [1.09x faster]
+      109  ms ± 7.3 ms
   concurrent mpmc
     TBQueue:    OK
       193  ms ±  14 ms
     RB.TBQueue: OK
-      136  ms ± 7.0 ms [1.42x faster]
+      136  ms ± 7.0 ms
   burst
     TBQueue:    OK
       114  ms ± 7.2 ms
     RB.TBQueue: OK
-      108  ms ± 6.8 ms [1.06x faster]
+      108  ms ± 6.8 ms
 ```
-Above, [] are annotations added by me, calculated from reported figures and rounded to 2 decimal places.
