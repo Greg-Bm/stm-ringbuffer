@@ -108,11 +108,12 @@ testTRingBuffer = describe "Unit tests for TRingBuffer" $ do
         `shouldReturn` False
 
   describe "peekFront" $ do
-    let testSeq = [1 .. 10]
+    let testHead = 1
+        testTail = [2 .. 10]
     it "looks at the first element pushed back" $ do
       buf <- newIO 10
-      forM_ testSeq (atomically . pushBack buf)
-      atomically (peekFront buf) `shouldReturn` head testSeq
+      forM_ (testHead : testTail) (atomically . pushBack buf)
+      atomically (peekFront buf) `shouldReturn` testHead
     it "retries when buffer is empty" $ do
       buf <- newIO 10
       atomically ((popFront buf >> pure True) `orElse` pure False)
@@ -164,11 +165,12 @@ testTRingBuffer = describe "Unit tests for TRingBuffer" $ do
         `shouldReturn` False
 
   describe "peekBack" $ do
-    let testSeq = [1 .. 10]
+    let testHead = 1
+        testTail = [2..10]
     it "looks at the first element pushed front" $ do
       buf <- newIO 10
-      forM_ testSeq (atomically . pushFront buf)
-      atomically (peekBack buf) `shouldReturn` head testSeq
+      forM_ (testHead : testTail) (atomically . pushFront buf)
+      atomically (peekBack buf) `shouldReturn` testHead
     it "retries when buffer is empty" $ do
       buf <- newIO 10
       atomically ((popBack buf >> pure True) `orElse` pure False)
