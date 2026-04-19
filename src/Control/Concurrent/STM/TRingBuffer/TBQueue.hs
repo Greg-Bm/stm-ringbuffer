@@ -5,6 +5,7 @@
 -- that matches that of 'Control.Concurrent.STM.TBQueue' . As such, it can
 -- be used as a drop-in replacement, for example with mixins.
 
+
 module Control.Concurrent.STM.TRingBuffer.TBQueue
   ( TBQueue,
     newTBQueue,
@@ -43,11 +44,13 @@ import Numeric.Natural (Natural)
 newtype TBQueue a = MkTBQueue {unMkTBQueue :: TRingBuffer a}
   deriving (Eq)
 
+-- | WARNING: size must not exceed maxBound :: Int
 newTBQueue :: Natural -> STM (TBQueue a)
 newTBQueue n
   | n > fromIntegral (maxBound :: Int) = error "TBQueue size cannot exceed maxBound :: Int"
   | otherwise = MkTBQueue <$> new (fromIntegral n)
 
+-- | WARNING: size must not exceed maxBound :: Int
 newTBQueueIO :: Natural -> IO (TBQueue a)
 newTBQueueIO n
   | n > fromIntegral (maxBound :: Int) = error "TBQueue size cannot exceed maxBound :: Int"
