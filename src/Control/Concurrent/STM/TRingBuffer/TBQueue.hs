@@ -1,5 +1,10 @@
 -- |
 -- Module      :  Control.Concurrent.STM.TRingUnMkTBQueuefer.TBQueue
+-- Copyright   :  (c) Greg Baimetov 2026
+-- License     :  BSD-style (see the file LICENSE)
+--
+-- Stability   :  experimental
+-- Portability :  non-portable (requires STM)
 --
 -- 'TBQueue' is a newtype wrapper around 'TRingBuffer' with an interface
 -- that matches that of 'Control.Concurrent.STM.TBQueue' . As such, it can

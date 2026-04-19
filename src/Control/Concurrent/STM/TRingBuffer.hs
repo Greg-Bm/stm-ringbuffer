@@ -1,5 +1,10 @@
 -- |
 -- Module      :  Control.Concurrent.STM.TRingBuffer
+-- Copyright   :  (c) Greg Baimetov 2026
+-- License     :  BSD-style (see the file LICENSE)
+--
+-- Stability   :  experimental
+-- Portability :  non-portable (requires STM)
 --
 -- 'TRingBuffer' is an STM ring buffer. The implementation allows for
 -- simultaneous operations on the front and back of the buffer.

@@ -10,7 +10,7 @@ synopsis:
 description:
   This package provides a ring buffer in STM and a wrapper which mimics the interface to TBQueue.
 
-copyright:       (c) Greg Baimetov
+copyright:       (c) Greg Baimetov 2026
 build-type:      Simple
 extra-doc-files:
   CHANGELOG.md
