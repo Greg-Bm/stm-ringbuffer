@@ -1,3 +1,7 @@
+{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE InstanceSigs #-}
+
 -- |
 -- Module      :  Control.Concurrent.STM.TRingBuffer
 -- Copyright   :  (c) Greg Baimetov 2026
@@ -8,10 +12,6 @@
 --
 -- 'TRingBuffer' is an STM ring buffer. The implementation allows for
 -- simultaneous operations on the front and back of the buffer.
-
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE NamedFieldPuns #-}
-{-# LANGUAGE InstanceSigs #-}
 
 module Control.Concurrent.STM.TRingBuffer
   ( TRingBuffer,
