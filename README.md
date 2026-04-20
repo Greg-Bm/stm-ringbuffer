@@ -21,9 +21,10 @@ library foo
 
 It is recommended to add the following to your cabal.project.local file:
 ```
-tests: True
-benchmarks: True
-semaphore: True
+tests: true
+benchmarks: true
+semaphore: true
+jobs: $ncpus
 ```
 
 ## Benchmark results
