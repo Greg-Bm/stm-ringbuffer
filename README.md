@@ -17,6 +17,15 @@ library foo
     stm hiding (Control.Concurrent.STM.TBQueue)
 ```
 
+## Development
+
+It is recommended to add the following to your cabal.project.local file:
+```
+tests: True
+benchmarks: True
+semaphore: True
+```
+
 ## Benchmark results
 In benchmarks, TRingBuffer.TBQueue demonstrates improved performance compared to STM's TBQueue:
 ```
