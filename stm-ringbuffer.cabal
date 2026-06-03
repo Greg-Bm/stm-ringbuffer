@@ -8,7 +8,10 @@ maintainer:      Greg Baimetov
 synopsis:
  Ring buffer implementation in STM
 description:
-  This package provides a ring buffer in STM and a wrapper which mimics the interface to TBQueue.
+  This package provides a ring buffer in STM and a wrapper which mimics the interface to TBQueue (from STM).
+  As of June 2, 2026, TBQueue  claims to be "based on an array", but actually is not.
+  Compared to TBQueue, this package offers better performance as a bounded queue, especially when used with multiple producers and consumers.
+  Unlike TBQueue, it also offers full support for push, pop, peek and flush operations on both ends.
 
 copyright:       (c) Greg Baimetov 2026
 build-type:      Simple
