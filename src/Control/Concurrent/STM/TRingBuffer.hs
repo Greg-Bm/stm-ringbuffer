@@ -23,6 +23,8 @@ module Control.Concurrent.STM.TRingBuffer
     size,
     pushFront,
     pushBack,
+    ringPushFront,
+    ringPushBack,
     popFront,
     popBack,
     peekFront,
@@ -43,6 +45,7 @@ import Control.Concurrent.STM
     writeTVar,
   )
 import Control.Concurrent.STM.TArray ()
+import Control.Monad (void, when)
 import Data.Array.Base
   ( MArray (newArray, unsafeRead, unsafeWrite),
   )
@@ -139,6 +142,20 @@ pushBack MkTRingBuffer {arr, back, size} e = testRetry size $ do
     Nothing -> do
       unsafeWrite arr ix (Just e)
       writeTVar back ix
+
+-- | Push an element to the front of the buffer, overwriting the backmost element if the buffer is full. O(1)
+ringPushFront :: TRingBuffer a -> a -> STM ()
+ringPushFront ring item = do
+    full <- isFull ring
+    when full . void $ popBack ring
+    pushFront ring item
+
+-- | Push an element to the back of the buffer, overwriting the frontmost element if the buffer is full. O(1)
+ringPushBack :: TRingBuffer a -> a -> STM ()
+ringPushBack ring item = do
+    full <- isFull ring
+    when full . void $ popFront ring
+    pushBack ring item
 
 -- | Pop an element from the front of the buffer. Retry if the buffer is empty. O(1)
 popFront :: TRingBuffer b -> STM b
