@@ -64,8 +64,8 @@ test-suite test
     , base
     , generic-random  >=1.5.0   && <1.6
     , hspec           >=2.11.17 && <2.12
-    , QuickCheck      >=2.16.0  && <2.17
-    , random          >=1.3.1   && <1.4
+    , QuickCheck      >=2.15.0  && <2.19
+    , random          >=1.2     && <1.4
     , stm
     , stm-ringbuffer
 
