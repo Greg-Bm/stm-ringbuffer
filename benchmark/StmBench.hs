@@ -7,7 +7,7 @@
 module StmBench (stmBench) where
 
 import Control.Concurrent.STM
-    ( atomically, newTBQueueIO, readTBQueue, writeTBQueue, TBQueue )
+    ( atomically, flushTBQueue, newTBQueueIO, readTBQueue, writeTBQueue, TBQueue )
 import Control.Concurrent.STM.TRingBuffer.TBQueue qualified as RB
 import Control.Concurrent.Async ( async, wait )
 import Control.Monad ( replicateM, replicateM_ )
@@ -31,24 +31,32 @@ stmBench = defaultMain
         [ bench "TBQueue" $ whnfAppIO (burst @TBQueue 1000) n
         , bench "RB.TBQueue" $ whnfAppIO (burst @RB.TBQueue 1000) n
         ]
+    , bgroup "write/flush"
+        [ bench "TBQueue" $ whnfAppIO (burst @TBQueue 1000) flushSz
+        , bench "RB.TBQueue" $ whnfAppIO (burst @RB.TBQueue 1000) flushSz
+        ]
     ]
   where
     n = 2000000
+    flushSz = 4096
 
 class Channel c where
     newc :: IO (c a)
     readc :: c a -> IO a
     writec :: c a -> a -> IO ()
+    flushc :: c a -> IO [a]
 
 instance Channel TBQueue where
     newc = newTBQueueIO 4096
     readc c = atomically $ readTBQueue c
     writec c x = atomically $ writeTBQueue c x
+    flushc c = atomically $ flushTBQueue c
 
 instance Channel RB.TBQueue where
     newc = RB.newTBQueueIO 4096
     readc c = atomically $ RB.readTBQueue c
     writec c x = atomically $ RB.writeTBQueue c x
+    flushc c = atomically $ RB.flushTBQueue c
 
 -- concurrent writing and reading with single producer, single consumer
 concurrentSpsc :: forall c. (Channel c) => Int -> IO ()
@@ -75,3 +83,12 @@ burst k n = do
     replicateM_ k $ do
         replicateM_ (n `div` k) $ writec c 1
         replicateM_ (n `div` k) $ readc c
+
+-- sequential push and flush
+sequentialFlush :: forall c. (Channel c) => Int -> Int -> IO ()
+sequentialFlush k n = do
+   c :: c Int <- newc
+   replicateM_ k $ do
+     replicateM_ n $ writec c 1
+     flushc c
+
