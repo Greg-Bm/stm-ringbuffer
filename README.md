@@ -33,17 +33,23 @@ In benchmarks, TRingBuffer.TBQueue demonstrates improved performance compared to
 All
   concurrent spsc
     TBQueue:    OK
-      119  ms ± 6.8 ms
+      121  ms ± 7.4 ms
     RB.TBQueue: OK
-      109  ms ± 7.3 ms
+      110  ms ± 7.0 ms
   concurrent mpmc
     TBQueue:    OK
-      193  ms ±  14 ms
+      194  ms ±  17 ms
     RB.TBQueue: OK
-      136  ms ± 7.0 ms
+      138  ms ± 7.0 ms
   burst
     TBQueue:    OK
-      114  ms ± 7.2 ms
+      116  ms ± 7.1 ms
     RB.TBQueue: OK
-      108  ms ± 6.8 ms
+      109  ms ± 7.6 ms
+  write/flush
+    TBQueue:    OK
+      279  μs ±  13 μs
+    RB.TBQueue: OK
+      263  μs ±  14 μs
 ```
+System information: M2 Macbook Pro with 16GB RAM and macOS 15.7.2
