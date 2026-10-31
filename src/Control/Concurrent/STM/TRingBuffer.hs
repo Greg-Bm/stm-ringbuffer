@@ -100,7 +100,10 @@ length rb@MkTRingBuffer {front, back, size} = do
       b <- readTVar back
       pure $ (b + 1 - f) `mod` size
 
--- | Is the ring buffer empty?
+-- | Is the ring buffer empty? O(1). May be more efficien than
+-- @
+-- \\b -> (==0) \<\$\> length b
+-- @
 isEmpty :: TRingBuffer a -> STM Bool
 isEmpty MkTRingBuffer {arr, front, size} = testPure size True $ do
   ix <- readTVar front
@@ -109,7 +112,10 @@ isEmpty MkTRingBuffer {arr, front, size} = testPure size True $ do
     Nothing -> True
     Just _ -> False
 
--- | Is the ring buffer full?
+-- | Is the ring buffer full? O(1). May be more efficient than
+-- @
+-- \\b -> (== size b) \<\$\> length b
+-- @
 isFull :: TRingBuffer a -> STM Bool
 isFull MkTRingBuffer {arr, front, size} = testPure size True $ do
   ix <- decr size <$> readTVar front
