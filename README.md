@@ -51,5 +51,7 @@ All
       279  μs ±  13 μs
     RB.TBQueue: OK
       263  μs ±  14 μs
+
+(Above results for M2 Macbook Pro with 16GB RAM and macOS 15.7.2)
 ```
-System information: M2 Macbook Pro with 16GB RAM and macOS 15.7.2
+
