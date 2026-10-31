@@ -19,7 +19,9 @@ import Control.Concurrent.STM.TRingBuffer as TRB
       flushFront,
       popBack,
       peekBack,
-      flushBack )
+      flushBack,
+      ringPushFront,
+      ringPushBack )
 import Control.Monad
     ( Monad((>>), (>>=)), replicateM, replicateM_, forM_ )
 import Data.Functor ( (<&>) )
@@ -191,3 +193,41 @@ testTRingBuffer = describe "Unit tests for TRingBuffer" $ do
       forM_ testSeq (atomically . pushBack buf)
       atomically (flushBack buf)
       atomically (isEmpty buf) `shouldReturn` True
+
+  describe "ringPushBack" $ do
+    it "behaves like pushBack when buffer is not full" $ do
+      buf <- newIO 10
+      forM_ [1 .. 5] (atomically . ringPushBack buf)
+      atomically (flushFront buf) `shouldReturn` [1 .. 5]
+    it "keeps the length at size when buffer is full" $ do
+      buf <- newIO 3
+      forM_ [1 .. 10] (atomically . ringPushBack buf)
+      atomically (length buf) `shouldReturn` 3
+    it "overwrites the frontmost element when buffer is full" $ do
+      buf <- newIO 3
+      forM_ [1 .. 10] (atomically . ringPushBack buf)
+      atomically (flushFront buf) `shouldReturn` [8, 9, 10]
+    it "does not retry when buffer is full" $ do
+      buf <- newIO 3
+      forM_ [1 .. 3] (atomically . pushBack buf)
+      atomically ((ringPushBack buf 4 >> pure True) `orElse` pure False)
+        `shouldReturn` True
+
+  describe "ringPushFront" $ do
+    it "behaves like pushFront when buffer is not full" $ do
+      buf <- newIO 10
+      forM_ [1 .. 5] (atomically . ringPushFront buf)
+      atomically (flushBack buf) `shouldReturn` [1 .. 5]
+    it "keeps the length at size when buffer is full" $ do
+      buf <- newIO 3
+      forM_ [1 .. 10] (atomically . ringPushFront buf)
+      atomically (length buf) `shouldReturn` 3
+    it "overwrites the backmost element when buffer is full" $ do
+      buf <- newIO 3
+      forM_ [1 .. 10] (atomically . ringPushFront buf)
+      atomically (flushBack buf) `shouldReturn` [8, 9, 10]
+    it "does not retry when buffer is full" $ do
+      buf <- newIO 3
+      forM_ [1 .. 3] (atomically . pushFront buf)
+      atomically ((ringPushFront buf 4 >> pure True) `orElse` pure False)
+        `shouldReturn` True
