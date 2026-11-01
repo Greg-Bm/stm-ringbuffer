@@ -31,7 +31,7 @@ common warnings
 
 source-repository head
   type:git
-  location: github.com/Greg-Bm/stm-ringbuffer.git
+  location: https://github.com/Greg-Bm/stm-ringbuffer.git
 
 library
   hs-source-dirs:     src
