@@ -11,9 +11,9 @@ Mixins can be used to quickly replace the standard TBQueue implementation with t
 library foo
   build-depends:
     stm
-    stm-queue
+    stm-ringbuffer
   mixins:
-    stm-queue (Control.Concurrent.STM.TRingBuffer.TBQueue as Control.Concurrent.STM.TBQueue),
+    stm-ringbuffer (Control.Concurrent.STM.TRingBuffer.TBQueue as Control.Concurrent.STM.TBQueue),
     stm hiding (Control.Concurrent.STM.TBQueue)
 ```
 
