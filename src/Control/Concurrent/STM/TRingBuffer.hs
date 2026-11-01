@@ -59,7 +59,7 @@ data TRingBuffer a
   { -- | Maximum number of elements the ring buffer can hold.
     size :: {-# UNPACK #-} !Int,
     -- Underlying TArray
-    -- index of frontmost item item
+    -- index of frontmost item
     front :: {-# UNPACK #-} !(TVar Int),
     -- index of rearmost item
     back :: {-# UNPACK #-} !(TVar Int),
